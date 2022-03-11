@@ -6,8 +6,16 @@
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 16:44:51 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/03/09 16:44:53 by iwillmot         ###   ########.fr       */
+/*   Updated: 2022/03/11 12:58:47 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*save;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	
+}
