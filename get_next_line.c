@@ -5,116 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 16:44:51 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/03/28 18:12:12 by iwillmot         ###   ########.fr       */
+/*   Created: 2022/04/01 11:42:35 by iwillmot          #+#    #+#             */
+/*   Updated: 2022/04/04 13:24:36 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*returnchar(char *save, char *final)
+int	ft_strlen(char	*str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_foundn(char *save)
+{
+	int i;
+
+	i = 0;
+	if (!save)
+		return (0);
+	while (save[i])
+	{
+		if (save[i] == '\n')
+			return (++i);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char *save, char *buff)
 {
 	char	*new;
 	int		i;
+	int		x;
 
 	i = 0;
-	while ((save[i] != '\n') && (save[i] != '\0'))
-		i++;
-	new = malloc(i);
-	i = 0;
-	while ((save[i] != '\n') && (save[i] != '\0'))
-	{
-		new[i] = save[i];
-		i++;
-	}
-	if (save[i] == '\n')
-		new[i++] = '\n';
+	x = 0;
+	new = malloc(ft_strlen(save) + ft_strlen(buff) + 1);
+	if (save)
+		while (save[x])
+			new[i++] = save[x++];
+	x = 0;
+	if (buff)
+		while (buff[x])
+			new[i++] = buff[x++];
 	new[i] = '\0';
+	if (save)
+		free(save);
 	return (new);
 }
 
-int	search_n(char *buff)
+char	*ft_assignline(char **save)
 {
-	int ret;
-	int	i;
+	int		i;
+	int		x;
+	char	*line;
+	char	*store;
 
-	ret = 0;
-	i = 0;
-	while ((buff[i]) && (ret == 0))
+	i = ft_foundn(*save);
+	if (i == 0)
+		i = ft_strlen(*save);
+	line = malloc(i + 1);
+	line[i] = '\0';
+	while (i-- > 0)
+		line[i] = (*save)[i];
+	store = NULL;
+	i = ft_strlen(*save) - ft_foundn(*save);
+	if (i != ft_strlen(*save) && i > 0)
 	{
-		if (buff[i] == '\n')
-			ret = 1;
-		i++;
+		store = malloc(i + 1);
+		store[i++] = '\0';
+		x = ft_strlen(*save);
+		while (i-- > 0)
+			store[i] = (*save)[x--];
 	}
-	return (ret);
-}
-char	*strjoin(char *dest, char *cpy)
-{
-	char	*new;
-	int		dlen;
-	int 	clen;
-
-	dlen = 0;
-	clen = 0;
-	while (dest[dlen])
-		dlen++;
-	while (cpy[clen])
-		clen++;
-	new = malloc(dlen + clen + 1);
-	dlen = 0;
-	clen = 0;
-	while (dest[dlen])
-	{
-		new[dlen] = dest[dlen];
-		dlen++;
-	}
-	while (cpy[clen])
-	{
-		new[dlen + clen] = cpy[clen];
-		clen++;
-	}
-	new[dlen + clen] = '\0';
-	free(dest);
-	return (new);
-}
-
-char	*readsave(int fd, char *save)
-{
-	char	*buff;
-	int		last;
-	int		read_len;
-
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	read_len = 1;
-	last = 0;
-	while ((last == 0) && (read_len != 0))
-	{
-		read_len = read(fd, buff, BUFFER_SIZE);
-		if (read_len == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
-		buff[read_len] = '\0';
-		last = search_n(buff);
-		save = strjoin(save, buff);
-	}
-	free(buff);
-	return (save);
+	free(*save);
+	*save = store;
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	//char		*line;
-	static char	*save;
-	static char	*final;
+	static char *save[500];
+	int			n;
+	char		*buff;
 
-	save = (char *)malloc(1);
-	save[0] = '\0';
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	save = readsave(fd, save);
-	if (save)
-		free(save);
-	return (returnchar(save, final));
+	if (BUFFER_SIZE < 1 || fd <= 0)
+		return (NULL);
+	buff = malloc(BUFFER_SIZE + 1);
+	while (!ft_foundn(&save[fd][0]))
+	{
+		n = read(fd, buff, BUFFER_SIZE);
+		if (n == 0)
+			break ;
+		buff[n] = '\0';
+		save[fd] = ft_strjoin(save[fd], buff);
+	}
+	free(buff);
+	if (save[fd])
+		return (ft_assignline(&save[fd]));
+	return (NULL);
 }
