@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 11:42:35 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/04/04 14:58:43 by iwillmot         ###   ########.fr       */
+/*   Created: 2022/04/04 14:56:18 by iwillmot          #+#    #+#             */
+/*   Updated: 2022/04/04 14:58:57 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(char	*str)
 {
@@ -91,7 +91,7 @@ char	*ft_assignline(char **save)
 	return (line);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
 	static char	*save[500];
 	int			n;
