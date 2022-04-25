@@ -6,7 +6,7 @@
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:42:35 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/04/05 17:59:59 by iwillmot         ###   ########.fr       */
+/*   Updated: 2022/04/25 13:08:11 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	int			n;
 	char		*buff;
 
-	if (BUFFER_SIZE < 1 || fd <= 0)
+	if (BUFFER_SIZE < 1 || fd < 0)
 		return (NULL);
 	buff = malloc(BUFFER_SIZE + 1);
 	while (!ft_foundn(&save[fd][0]))
