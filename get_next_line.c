@@ -6,7 +6,7 @@
 /*   By: iwillmot <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:42:35 by iwillmot          #+#    #+#             */
-/*   Updated: 2022/04/25 13:08:11 by iwillmot         ###   ########.fr       */
+/*   Updated: 2022/04/29 17:36:21 by iwillmot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_assignline(char **save)
 
 char	*get_next_line(int fd)
 {
-	static char	*save[500];
+	static char	*save[4096];
 	int			n;
 	char		*buff;
 

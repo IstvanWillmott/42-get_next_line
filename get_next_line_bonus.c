@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 int	ft_strlen(char	*str)
 {
@@ -93,7 +93,7 @@ char	*ft_assignline(char **save)
 
 char	*get_next_line(int fd)
 {
-	static char	*save[500];
+	static char	*save[4096];
 	int			n;
 	char		*buff;
 
